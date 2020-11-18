@@ -9,5 +9,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Reference Include="XafSolution.Module.NetCore">
+      <HintPath>..\..\XafSolution\XafSolution.Module\bin_NetCore\netstandard2.0\XafSolution.Module.NetCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
