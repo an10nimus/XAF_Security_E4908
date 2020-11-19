@@ -1,7 +1,82 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@*@using BlazorApplication.NetCore*@
+@*@using BlazorApplication.NetCore.Components*@
+@using XafSolution.Module.BusinessObjects
+@using System.Collections.ObjectModel
+@using System.Threading
+@using DevExpress.Xpo
+@using DevExpress.ExpressApp
 
-Welcome to your new app.
+@*@implements IDisposable
+@inject SecurityProvider SecurityProvider*@
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<DxDataGrid Data=@employees
+                PageSize="20"
+                ShowFilterRow="true"
+                AllowSort="true">
+@*    <DxDataGridColumn Field=@nameof(Employee.FirstName) Caption="First Name" />
+    <DxDataGridColumn Field=@nameof(Employee.LastName) Caption="Last Name" />
+    <DxDataGridSpinEditColumn Field=@nameof(Employee.Email) Caption="Email" />*@
+</DxDataGrid>
+@code {
+    private List<Employee> employees;
+    @*private IQueryable<Department> departments;
+    private DxDataGrid<Employee> grid;
+    private Employee employee = null;*@
+    @*IObjectSpace ObjectSpace;*@
+
+    protected override void OnInitialized() {
+        @*ObjectSpace = SecurityProvider.ObjectSpaceProvider.CreateObjectSpace();
+        employees = ObjectSpace.GetObjectsQuery<Employee>();
+        departments = ObjectSpace.GetObjectsQuery<Department>();*@
+        //employee = new Employee();
+        UnitOfWork uow = new UnitOfWork();
+        employees = new List<Employee>();
+        employees.Add(new Employee(uow));
+    }
+@*    Task OnRowRemoving(object item) {
+        ObjectSpace.Delete(item);
+        ObjectSpace.CommitChanges();
+        return grid.Refresh();
+    }
+    async Task HandleValidSubmit() {
+        ObjectSpace.CommitChanges();
+        await grid.Refresh();
+        employee = null;
+        await grid.CancelRowEdit();
+    }
+    public void Dispose() {
+        SecurityProvider?.Dispose();
+        ObjectSpace?.Dispose();
+    }
+    Task StartRowEdit(object item) {
+        employee = item as Employee ?? ObjectSpace.CreateObject<Employee>();
+        return grid.StartRowEdit(item);
+    }
+    Task CancelRowEdit() {
+        employee = null;
+        return grid.CancelRowEdit();
+    }
+    *@
+    
+    
+    
+    @*List<Employee> employees;
+    Employee employee;
+
+    protected override void OnInitialized() {
+        //employees = GetEmployees();
+        employee = new Employee(FirstName = )
+        UnitOfWork uow = new UnitOfWork();
+        employees = new List<Employee>();
+        employees.Add(new Employee(uow));
+    } 
+
+    public List<Employee> GetEmployees() {
+        List<Employee> tmp = null;
+        UnitOfWork uow = new UnitOfWork();
+        tmp.Add(new Employee(uow));
+        return tmp;
+    }*@
+}
